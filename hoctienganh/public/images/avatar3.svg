@@ -1,0 +1,7 @@
+<!-- Note: This is a placeholder. In a real project, use actual JPG files here -->
+<!-- For now, we're using SVG placeholders since we can't create binary JPG files in this context -->
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="50" fill="#4B5563" />
+  <circle cx="50" cy="40" r="20" fill="#E5E7EB" />
+  <path d="M25 85 C25 65, 75 65, 75 85" fill="#E5E7EB" />
+</svg> 

@@ -1,0 +1,30 @@
+<svg width="500" height="350" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background elements -->
+  <rect width="500" height="350" fill="#E0F2FE" rx="20" />
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="70" r="30" fill="#93C5FD" />
+  <circle cx="400" cy="250" r="40" fill="#93C5FD" />
+  <circle cx="250" cy="50" r="20" fill="#BFDBFE" />
+  <circle cx="450" cy="100" r="15" fill="#BFDBFE" />
+  <circle cx="50" cy="200" r="25" fill="#BFDBFE" />
+  
+  <!-- Book -->
+  <rect x="150" y="100" width="200" height="150" rx="5" fill="#2563EB" />
+  <rect x="160" y="110" width="180" height="130" rx="3" fill="white" />
+  
+  <!-- Text lines on book -->
+  <rect x="180" y="130" width="140" height="8" rx="4" fill="#E2E8F0" />
+  <rect x="180" y="150" width="120" height="8" rx="4" fill="#E2E8F0" />
+  <rect x="180" y="170" width="140" height="8" rx="4" fill="#E2E8F0" />
+  <rect x="180" y="190" width="90" height="8" rx="4" fill="#E2E8F0" />
+  <rect x="180" y="210" width="110" height="8" rx="4" fill="#E2E8F0" />
+  
+  <!-- Graduation cap -->
+  <path d="M320 80L380 110L320 140L260 110L320 80Z" fill="#2563EB" />
+  <rect x="315" y="140" width="10" height="30" fill="#2563EB" />
+  <rect x="300" y="170" width="40" height="5" rx="2.5" fill="#2563EB" />
+  
+  <!-- English text -->
+  <text x="250" y="280" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1E40AF" text-anchor="middle">Học Tiếng Anh</text>
+</svg>

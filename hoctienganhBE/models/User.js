@@ -55,6 +55,30 @@ class User {
             throw error;
         }
     }
+
+    static async updateDisplayName(userId, displayName) {
+        try {
+            const [result] = await pool.execute(
+                'UPDATE Users SET DisplayName = ? WHERE UserID = ?',
+                [displayName, userId]
+            );
+            return result.affectedRows > 0;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async updatePassword(userId, passwordHash) {
+        try {
+            const [result] = await pool.execute(
+                'UPDATE Users SET PasswordHash = ? WHERE UserID = ?',
+                [passwordHash, userId]
+            );
+            return result.affectedRows > 0;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = User; 

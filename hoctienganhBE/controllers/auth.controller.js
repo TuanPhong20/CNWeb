@@ -105,8 +105,63 @@ const getCurrentUser = async (req, res) => {
     }
 };
 
+// Cập nhật thông tin cá nhân (displayName)
+const updateProfile = async (req, res) => {
+    try {
+        const { displayName } = req.body;
+        if (!displayName) {
+            return res.status(400).json({ message: 'Display name is required' });
+        }
+        const updated = await User.updateDisplayName(req.user.userId, displayName);
+        if (!updated) {
+            return res.status(404).json({ message: 'Không tìm thấy user' });
+        }
+        res.json({ message: 'Cập nhật thông tin thành công', displayName });
+    } catch (error) {
+        console.error('Lỗi cập nhật thông tin:', error);
+        res.status(500).json({ message: 'Lỗi server', error: error.message });
+    }
+};
+
+// Đổi mật khẩu
+const changePassword = async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        if (!oldPassword || !newPassword) {
+            return res.status(400).json({ message: 'Thiếu thông tin mật khẩu' });
+        }
+        const user = await User.findById(req.user.userId);
+        if (!user) {
+            return res.status(404).json({ message: 'Không tìm thấy user' });
+        }
+        // Log để debug
+        console.log('user:', user);
+        console.log('user.PasswordHash:', user.PasswordHash);
+        console.log('user.passwordHash:', user.passwordHash);
+        const passwordHash = user.PasswordHash || user.passwordHash;
+        if (!passwordHash) {
+            return res.status(500).json({ message: 'Không tìm thấy mật khẩu của user trong database' });
+        }
+        const isMatch = await bcrypt.compare(oldPassword, passwordHash);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Mật khẩu cũ không đúng' });
+        }
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        const updated = await User.updatePassword(req.user.userId, hashedPassword);
+        if (!updated) {
+            return res.status(500).json({ message: 'Không thể cập nhật mật khẩu' });
+        }
+        res.json({ message: 'Đổi mật khẩu thành công' });
+    } catch (error) {
+        console.error('Lỗi đổi mật khẩu:', error);
+        res.status(500).json({ message: 'Lỗi server', error: error.message });
+    }
+};
+
 module.exports = {
     register,
     login,
-    getCurrentUser
+    getCurrentUser,
+    updateProfile,
+    changePassword
 }; 

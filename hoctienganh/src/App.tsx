@@ -7,6 +7,7 @@ import MyTopicsPage from './pages/MyTopicsPage';
 import TopicDetailPage from './pages/TopicDetailPage';
 import CreateTopicPage from './pages/CreateTopicPage';
 import QuizPage from './pages/QuizPage';
+import QuizTopicPage from './pages/QuizTopicPage';
 import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/flashcard" element={<div>FlashCard Page Coming Soon</div>} />
             <Route path="/quiz" element={<QuizPage />} />
+            <Route path="/quiz/topic/:topicId" element={<QuizTopicPage />} />
             <Route path="/my-topics" element={<MyTopicsPage />} />
             <Route path="/listening-writing/:topicId" element={<TopicDetailPage />} />
             <Route path="/create-topic" element={<CreateTopicPage />} />

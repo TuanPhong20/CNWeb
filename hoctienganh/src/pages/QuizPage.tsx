@@ -31,10 +31,17 @@ const QuizPage: React.FC = () => {
         }
         
         const data = await response.json();
-        setTopics(data);
+        setTopics(
+          data.map((item: any) => ({
+            id: item.id || item.TopicID,
+            title: item.title || item.Title,
+            description: item.description || item.Description,
+            userId: item.userId || item.UserID,
+            createdAt: item.createdAt || item.CreatedAt,
+          }))
+        );
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching topics:', err);
         setError(err instanceof Error ? err.message : 'Đã xảy ra lỗi');
         setLoading(false);
       }

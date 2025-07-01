@@ -13,6 +13,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   login: (token: string, user: User) => void;
   logout: () => void;
+  setUser: (user: any) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

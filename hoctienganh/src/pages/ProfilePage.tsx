@@ -17,27 +17,7 @@ const ProfilePage = () => {
         confirmPassword: ''
     });
 
-    const { user, token } = useAuth();
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await fetch('http://localhost:3000/api/auth/me');
-
-    //             if (!response.ok) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //             }
-
-    //             const data = await response.json();
-    //             console.log(data);
-
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
+    const { user, token, setUser } = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -66,7 +46,7 @@ const ProfilePage = () => {
             });
 
             const data = await response.json();
-            console.log(data);
+            setUser({...user, displayName: data.displayName, email: data.email ?? user?.email});
 
 
             if (!response.ok) {

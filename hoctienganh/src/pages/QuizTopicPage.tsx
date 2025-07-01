@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/QuizPage.css';
+import { useAuth } from '../contexts/AuthContext';
 
 // Sound effects
 const CORRECT_SOUND = 'https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b3cfa.mp3';
@@ -59,6 +60,7 @@ function extractAudioUrlAndText(questionText: string) {
 const QuizTopicPage: React.FC = () => {
   const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
+  const { token, isAuthenticated } = useAuth();
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -125,6 +127,13 @@ const QuizTopicPage: React.FC = () => {
   useEffect(() => {
     setTimeLeft(TIME_PER_QUESTION);
   }, [current]);
+
+  useEffect(() => {
+    if (!token || !isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+  }, [token, isAuthenticated, navigate]);
 
   const playSound = (url: string) => {
     if (audioRef.current) {

@@ -17,8 +17,15 @@ const QuizPage: React.FC = () => {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { token } = useAuth();
+  const { token, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token || !isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+  }, [token, isAuthenticated, navigate]);
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -31,15 +38,19 @@ const QuizPage: React.FC = () => {
         }
         
         const data = await response.json();
-        setTopics(
-          data.map((item: any) => ({
-            id: item.id || item.TopicID,
-            title: item.title || item.Title,
-            description: item.description || item.Description,
-            userId: item.userId || item.UserID,
-            createdAt: item.createdAt || item.CreatedAt,
-          }))
-        );
+        const userTopics = Array.isArray(data)
+          ? data.filter((item: any) => {
+              const topicUserId = item.UserID || item.userId;
+              return topicUserId === user?.userId;
+            }).map((item: any) => ({
+              id: item.id || item.TopicID,
+              title: item.title || item.Title,
+              description: item.description || item.Description,
+              userId: item.userId || item.UserID,
+              createdAt: item.createdAt || item.CreatedAt,
+            }))
+          : [];
+        setTopics(userTopics);
         setLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Đã xảy ra lỗi');
@@ -48,7 +59,7 @@ const QuizPage: React.FC = () => {
     };
     
     fetchTopics();
-  }, []);
+  }, [user]);
 
   const handleTopicClick = (topicId: number) => {
     navigate(`/quiz/topic/${topicId}`);

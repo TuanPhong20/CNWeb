@@ -70,8 +70,6 @@ const Header: React.FC = () => {
                   <ul>
                     <li><Link to="/profile">Tài khoản của tôi</Link></li>
                     <li><Link to="/my-topics">Danh sách các chủ đề của tôi</Link></li>
-                    <li><a href="#" onClick={handleSavedTopicsClick}>Chủ đề đã lưu</a></li>
-                    <li><Link to="/settings">Cài đặt</Link></li>
                     <li><button onClick={handleLogout}>Đăng xuất</button></li>
                   </ul>
                 </div>

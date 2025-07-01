@@ -18,6 +18,9 @@ const ProfilePage = () => {
     });
 
     const { user, token, setUser } = useAuth();
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -29,9 +32,12 @@ const ProfilePage = () => {
     // chức năng đổi tên hiển thị và email
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        console.log(formData);
-
+        setError(null);
+        setSuccess(null);
+        if (!formData.displayName.trim()) {
+            setError('Display name is required');
+            return;
+        }
         try {
             const response = await fetch('http://localhost:3000/api/auth/me/profile', {
                 method: 'PUT',
@@ -40,20 +46,28 @@ const ProfilePage = () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    email: formData.email,
+                    email: formData.email || user?.email,
                     displayName: formData.displayName
                 })
             });
-
+          
             const data = await response.json();
+          
             setUser({...user, displayName: data.displayName, email: data.email ?? user?.email});
-
-
+          
             if (!response.ok) {
-                throw new Error(data.message || 'Đăng nhập thất bại');
+                setError(data.message || 'Cập nhật thất bại');
+                return;
             }
+            // Cập nhật lại user trong context và localStorage
+            if (user) {
+                const updatedUser = { ...user, displayName: formData.displayName, email: formData.email || user.email };
+                setUser(updatedUser);
+                localStorage.setItem('user', JSON.stringify(updatedUser));
+            }
+            setSuccess('Cập nhật thành công!');
         } catch (error) {
-
+            setError('Có lỗi xảy ra, vui lòng thử lại!');
         }
     };
 
@@ -170,6 +184,7 @@ const ProfilePage = () => {
                                                     Nhập tên hiển thị
                                                 </label>
                                                 <input type="text" className="form-control" id="inputFirstName" name='displayName' value={formData.displayName} onChange={handleChange} />
+                                                {error && <div className="text-danger mt-1">{error}</div>}
                                             </div>
                                             <div className="col-12 col-md-6 mt-3">
                                                 <label htmlFor="inputEmail" className="form-label">
@@ -181,6 +196,7 @@ const ProfilePage = () => {
                                                 <button className="btn btn-primary" onClick={handleSubmit}>
                                                     lưu thông tin
                                                 </button>
+                                                {success && <div className="text-success mt-2">{success}</div>}
                                             </div>
                                         </div>
                                     )}

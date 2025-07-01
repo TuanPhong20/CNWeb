@@ -21,10 +21,8 @@ const Footer: React.FC = () => {
             <h3>Liên kết</h3>
             <ul>
               <li><Link to="/">Trang chủ</Link></li>
-              <li><Link to="/courses">Khóa học</Link></li>
               <li><Link to="/vocabulary">Từ vựng</Link></li>
               <li><Link to="/grammar">Ngữ pháp</Link></li>
-              <li><Link to="/exercises">Bài tập</Link></li>
             </ul>
           </div>
           
@@ -42,7 +40,7 @@ const Footer: React.FC = () => {
             <h3>Liên hệ</h3>
             <p>Email: info@hoctienganh.com</p>
             <p>Hotline: 0123 456 789</p>
-            <p>Địa chỉ: Hà Nội, Việt Nam</p>
+            <p>Địa chỉ: Quy Nhơn, Việt Nam</p>
           </div>
         </div>
         

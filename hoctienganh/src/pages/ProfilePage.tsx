@@ -18,29 +18,9 @@ const ProfilePage = () => {
     });
 
     const { user, token, setUser } = useAuth();
-
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await fetch('http://localhost:3000/api/auth/me');
-
-    //             if (!response.ok) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //             }
-
-    //             const data = await response.json();
-    //             console.log(data);
-
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -70,7 +50,11 @@ const ProfilePage = () => {
                     displayName: formData.displayName
                 })
             });
+          
             const data = await response.json();
+          
+            setUser({...user, displayName: data.displayName, email: data.email ?? user?.email});
+          
             if (!response.ok) {
                 setError(data.message || 'Cập nhật thất bại');
                 return;

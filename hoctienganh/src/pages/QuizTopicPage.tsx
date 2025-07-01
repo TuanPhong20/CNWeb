@@ -49,6 +49,13 @@ function shuffleArray<T>(array: T[]): T[] {
 
 const TIME_PER_QUESTION = 15; // Giảm thời gian còn 15 giây
 
+function extractAudioUrlAndText(questionText: string) {
+  const audioMatch = questionText.match(/<audio\s+src=["']([^"']+)["'][^>]*><\/audio>/);
+  const audioUrl = audioMatch ? audioMatch[1] : null;
+  const cleanText = questionText.replace(/<audio\s+src=["'][^"']+["'][^>]*><\/audio>/, '').trim();
+  return { audioUrl, cleanText };
+}
+
 const QuizTopicPage: React.FC = () => {
   const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
@@ -373,6 +380,7 @@ const QuizTopicPage: React.FC = () => {
   const q = questions[current];
   const correctId = q.options.find(opt => opt.isCorrect)?.optionId;
   const progress = ((current + 1) / questions.length) * 100;
+  const { audioUrl, cleanText } = extractAudioUrlAndText(q.questionText);
 
   return (
     <div className="quiz-page">
@@ -402,7 +410,17 @@ const QuizTopicPage: React.FC = () => {
 
           <div className="quiz-content">
             <div className="question-container">
-              <h2 className="question-text">{q.questionText}</h2>
+              <h2 className="question-text">{cleanText}</h2>
+              {audioUrl && (
+                <button
+                  className="audio-btn"
+                  onClick={() => playSound(audioUrl)}
+                  title="Nghe phát âm"
+                  style={{ marginLeft: 8 }}
+                >
+                  🔊 Nghe
+                </button>
+              )}
             </div>
             
             <div className={`quiz-options animate-${animate}`}>

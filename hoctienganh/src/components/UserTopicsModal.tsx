@@ -12,9 +12,16 @@ interface Topic {
 interface UserTopicsModalProps {
   isOpen: boolean;
   onClose: () => void;
+  mode?: 'navigate' | 'select'; // Chế độ hoạt động của modal
+  onTopicSelect?: (topicId: number) => void; // Callback khi chọn topic ở chế độ select
 }
 
-const UserTopicsModal: React.FC<UserTopicsModalProps> = ({ isOpen, onClose }) => {
+const UserTopicsModal: React.FC<UserTopicsModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  mode = 'navigate', // Mặc định là chế độ điều hướng
+  onTopicSelect 
+}) => {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -76,7 +83,11 @@ const UserTopicsModal: React.FC<UserTopicsModalProps> = ({ isOpen, onClose }) =>
   }, [isOpen, fetchUserTopics]);
 
   const handleTopicClick = (topicId: number) => {
-    navigate(`/listening-writing/${topicId}`);
+    if (mode === 'select' && onTopicSelect) {
+      onTopicSelect(topicId);
+    } else {
+      navigate(`/listening-writing/${topicId}`);
+    }
     onClose();
   };
 

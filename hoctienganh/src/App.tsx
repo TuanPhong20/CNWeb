@@ -7,9 +7,11 @@ import MyTopicsPage from './pages/MyTopicsPage';
 import TopicDetailPage from './pages/TopicDetailPage';
 import CreateTopicPage from './pages/CreateTopicPage';
 import QuizPage from './pages/QuizPage';
+import ProfilePage from './pages/ProfilePage';
 import QuizTopicPage from './pages/QuizTopicPage';
 import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
             <Route path="/my-topics" element={<MyTopicsPage />} />
             <Route path="/listening-writing/:topicId" element={<TopicDetailPage />} />
             <Route path="/create-topic" element={<CreateTopicPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </div>
       </Router>

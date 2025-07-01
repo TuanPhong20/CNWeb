@@ -4,6 +4,7 @@ interface User {
   userId: number;
   email: string;
   displayName: string;
+  username: string;
 }
 
 interface AuthContextType {
@@ -64,7 +65,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     token,
     isAuthenticated,
     login,
-    logout
+    logout,
+    setUser
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
